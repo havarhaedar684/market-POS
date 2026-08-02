@@ -1,4 +1,25 @@
+<?php
+include "db.php";
+if($_POST){
+$email=$_POST['username'];
+$password=$_POST['password'];
+$sql="SELECT username,password  FROM users";
 
+$result=mysqli_query($conn, $sql);
+while($row=mysqli_fetch_assoc($result)){
+
+if($result)
+ echo $row['email']."</br>" ;
+ echo password_hash($row['password'],PASSWORD_DEFAULT);
+ header("Location:dashboard.php")
+
+}
+}
+
+
+
+
+?>
 
 
 
@@ -169,12 +190,12 @@
             <h2>Market POS</h2>
             <p>Sign in to your terminal</p>
         </div>
-        <form>
+        <form method="POST">
             <div class="field">
                 <label for="username">Username</label>
                 <div class="input-container">
                     <i class="fa-solid fa-user"></i>
-                    <input type="text" id="username" placeholder="Enter your username" required>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
                 </div>
             </div>
             
@@ -182,7 +203,7 @@
                 <label for="password">Password</label>
                 <div class="input-container">
                     <i class="fa-solid fa-lock"></i>
-                    <input type="password" id="password" placeholder="Enter your password" required>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
                 </div>
             </div>
             
