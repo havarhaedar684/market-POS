@@ -1,20 +1,25 @@
 <?php
+error_reporting(E_ALL); ini_set('display_errors', 1);
+
+session_start();
 include "db.php";
-if($_POST){
-$email=$_POST['username'];
-$password=$_POST['password'];
-$sql="SELECT username,password  FROM users";
-
+if($_SERVER["REQUEST_METHOD"]=='POST'){
+$email=$_POST['email'];
+$pass=$_POST['password'];
+$sql="SELECT * FROM users WHERE email='$email'";
 $result=mysqli_query($conn, $sql);
-while($row=mysqli_fetch_assoc($result)){
-
-if($result)
- echo $row['email']."</br>" ;
- echo password_hash($row['password'],PASSWORD_DEFAULT);
- header("Location:dashboard.php")
+if(mysqli_num_rows($result)>0){
+    $row=mysqli_fetch_assoc($result);
+if(password_verify($pass, $row['password'])){
+    $_SESSION['username']=$row['username'];
+    header("Location:dashboard.php");
+    exit();
 
 }
 }
+}
+
+
 
 
 
@@ -192,10 +197,10 @@ if($result)
         </div>
         <form method="POST">
             <div class="field">
-                <label for="username">Username</label>
+                <label for="email">Email</label>
                 <div class="input-container">
                     <i class="fa-solid fa-user"></i>
-                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                    <input type="text" id="email" name="email" placeholder="Enter your email" required>
                 </div>
             </div>
             
