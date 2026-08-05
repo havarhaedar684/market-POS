@@ -28,7 +28,7 @@ $result=mysqli_query($conn,$sql);
         }
 
         body {
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            background: #96B6C5;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -37,7 +37,7 @@ $result=mysqli_query($conn,$sql);
         }
 
         .main-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: #ADC4CE;
             backdrop-filter: blur(10px);
             padding: 40px 35px;
             border-radius: 16px;
@@ -75,7 +75,7 @@ $result=mysqli_query($conn,$sql);
         .logo-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+            background: #155674;
             color: white;
             font-size: 24px;
             display: flex;
@@ -99,8 +99,8 @@ $result=mysqli_query($conn,$sql);
         }
 
         .logout-btn {
-            background: #fee2e2;
-            color: #dc2626;
+            background: #155674;
+            color: white;
             border: none;
             padding: 10px 16px;
             border-radius: 10px;
@@ -115,7 +115,7 @@ $result=mysqli_query($conn,$sql);
         }
 
         .logout-btn:hover {
-            background: #fecaca;
+            background: #0891b2;;
             transform: translateY(-1px);
         }
 
@@ -152,10 +152,81 @@ $result=mysqli_query($conn,$sql);
         .data-table tr:last-child td {
             border-bottom: none;
         }
+
+        .action-btns {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-update {
+            background: #155674;
+            color:white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-update:hover {
+            background: #0891b2;;
+        }
+
+        .btn-delete {
+            background: #155674;
+            color:white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-delete:hover {
+            background: #0891b2;;
+        }
+
         .table-footer-actions {
             display: flex;
             justify-content: flex-end;
-            margin-top: 15px;
+            margin-top: 20px;
+        }
+
+        .add-user-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #155674;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            box-shadow: 0 4px 14px rgba(6, 182, 212, 0.35);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .add-user-btn:hover {
+            background: #0891b2;
+            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .add-user-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 8px rgba(6, 182, 212, 0.3);
         }
 
         .data-table tr:hover {
@@ -192,7 +263,7 @@ $result=mysqli_query($conn,$sql);
                     </th>
                     <th>Email</th>
                     
-                    <th>Password (Hash)</th>
+                    <th>Password </th>
 
                     <th>Role</th>
 
@@ -222,8 +293,14 @@ $result=mysqli_query($conn,$sql);
                  ?>
 
                  <?php
-                       echo  "<td>". $row['role']."</td>";
+                       echo  "<td>".$row['role']."</td>";
                  ?>
+                 <td>
+                 <div class='action-btns'>
+                               <a href="update.php?id=<?php echo $row['id'];?>" class='btn-update'><i class='fa-solid fa-pen-to-square'></i> Edit</a>
+                               <a href="delete.php?id= <?php echo $row['id']; ?>" class='btn-delete'><i class='fa-solid fa-trash'></i> Delete</a>
+                           </div>
+                           </td>
                    </tr>
                  <?php
                  endwhile;

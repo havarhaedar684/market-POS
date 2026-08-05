@@ -1,38 +1,27 @@
 <?php
-session_start();
 include "db.php";
-if($_SERVER["REQUEST_METHOD"]=='POST'){
+$id=$_GET['id'];
+if($_POST){
+$user=$_POST['username'];
 $email=$_POST['email'];
 $pass=$_POST['password'];
-$sql="SELECT * FROM users WHERE email='$email'";
+$role=$_POST['role'];
+$sql = "UPDATE users SET username='$user', email='$email', password='$pass', role='$role' WHERE id=$id";
 $result=mysqli_query($conn, $sql);
-if(mysqli_num_rows($result)>0){
-    $row=mysqli_fetch_assoc($result);
-if(password_verify($pass, $row['password'])){
-    $_SESSION['username']=$row['username'];
-    header("Location:dashboard.php");
+if($result){
+    header("Location:read.php");
     exit();
-
 }
 }
-}
-
-
-
-
 
 
 ?>
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Market POS - Login</title>
+    <title>Market POS - Add User</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -43,7 +32,7 @@ if(password_verify($pass, $row['password'])){
         }
 
         body {
-            background: #96B6C5;
+            background:#96B6C5;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -52,7 +41,7 @@ if(password_verify($pass, $row['password'])){
         }
 
         .login-card {
-            background: #ADC4CE;
+            background:#ADC4CE;
             backdrop-filter: blur(10px);
             padding: 40px 35px;
             border-radius: 16px;
@@ -76,13 +65,13 @@ if(password_verify($pass, $row['password'])){
 
         .login-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .logo-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+            background: #155674;
             color: white;
             font-size: 24px;
             display: flex;
@@ -107,7 +96,7 @@ if(password_verify($pass, $row['password'])){
         }
 
         .field {
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .field label {
@@ -115,7 +104,7 @@ if(password_verify($pass, $row['password'])){
             font-size: 13px;
             font-weight: 600;
             color: #475569;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -134,7 +123,7 @@ if(password_verify($pass, $row['password'])){
             transition: color 0.3s;
         }
 
-        .field input {
+        .field input, .field select {
             width: 100%;
             padding: 12px 14px 12px 45px;
             border: 2px solid #e2e8f0;
@@ -146,7 +135,12 @@ if(password_verify($pass, $row['password'])){
             transition: all 0.3s ease;
         }
 
-        .field input:focus {
+        .field select {
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .field input:focus, .field select:focus {
             border-color: #4f46e5;
             background-color: #ffffff;
             box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
@@ -159,7 +153,7 @@ if(password_verify($pass, $row['password'])){
 
         .login-btn {
             width: 100%;
-            background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+            background: #155674;
             color: white;
             border: none;
             padding: 14px;
@@ -173,7 +167,7 @@ if(password_verify($pass, $row['password'])){
         }
 
         .login-btn:hover {
-            background: #0891b2;
+            background: linear-gradient(135deg, #4338ca 0%, #3730a3 100%);
             box-shadow: 0 6px 16px rgba(79, 70, 229, 0.6);
             transform: translateY(-1px);
         }
@@ -188,17 +182,25 @@ if(password_verify($pass, $row['password'])){
     <div class="login-card">
         <div class="login-header">
             <div class="logo-icon">
-                <i class="fa-solid fa-cash-register"></i>
+                <i class="fa-solid fa-user-plus"></i>
             </div>
             <h2>Market POS</h2>
-            <p>Sign in to your terminal</p>
+            <p>Add new system user</p>
         </div>
         <form method="POST">
             <div class="field">
-                <label for="email">Email</label>
+                <label for="username">Username</label>
                 <div class="input-container">
                     <i class="fa-solid fa-user"></i>
-                    <input type="text" id="email" name="email" placeholder="Enter your email" required>
+                    <input type="text" id="username" name="username" placeholder="Enter username" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="email">Email</label>
+                <div class="input-container">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" id="email" name=email placeholder="Enter email address" required>
                 </div>
             </div>
             
@@ -206,11 +208,23 @@ if(password_verify($pass, $row['password'])){
                 <label for="password">Password</label>
                 <div class="input-container">
                     <i class="fa-solid fa-lock"></i>
-                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <input type="password" id="password" name=password placeholder="Enter password" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="role">Role</label>
+                <div class="input-container">
+                    <i class="fa-solid fa-user-tag"></i>
+                    <select id="role" name=role required>
+                        <option value="" disabled selected>Select user role</option>
+                        <option value="employee">Employee</option>
+                        <option value="admin">Admin</option>
+                    </select>
                 </div>
             </div>
             
-            <button type="submit" class="login-btn">Login</button>
+            <button type="submit" class="login-btn">Add User</button>
         </form>
     </div>
 

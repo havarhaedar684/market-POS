@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "db.php";
 if($_POST){
 $user=$_POST['username'];
@@ -40,7 +41,7 @@ if($result){
         }
 
         body {
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            background:#96B6C5;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -49,7 +50,7 @@ if($result){
         }
 
         .login-card {
-            background: rgba(255, 255, 255, 0.95);
+            background:#ADC4CE;
             backdrop-filter: blur(10px);
             padding: 40px 35px;
             border-radius: 16px;
@@ -79,7 +80,7 @@ if($result){
         .logo-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+            background: #155674;
             color: white;
             font-size: 24px;
             display: flex;
@@ -161,7 +162,7 @@ if($result){
 
         .login-btn {
             width: 100%;
-            background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+            background: #155674;
             color: white;
             border: none;
             padding: 14px;
