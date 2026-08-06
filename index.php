@@ -82,7 +82,7 @@ if(password_verify($pass, $row['password'])){
         .logo-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+            background: #155674;
             color: white;
             font-size: 24px;
             display: flex;
@@ -159,7 +159,7 @@ if(password_verify($pass, $row['password'])){
 
         .login-btn {
             width: 100%;
-            background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+            background: #155674;
             color: white;
             border: none;
             padding: 14px;

@@ -13,6 +13,7 @@ if($result){
     exit();
 }
 }
+//this is update in categories:
 
 
 ?>
