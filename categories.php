@@ -239,6 +239,7 @@ if($result){
                 <li><a href="home.php"><i class="fa-solid fa-house"></i> Home</a></li>
                 <li class="active"><a href="categories.php"><i class="fa-solid fa-list"></i> Categories</a></li>
                 <li><a href="products.php"><i class="fa-solid fa-box"></i> Products</a></li>
+                <li class="active"><a href="suppliers.php"><i class="fa-solid fa-truck"></i> Suppliers</a></li>
             </ul>
         </div>
         <div class="logout-section">
