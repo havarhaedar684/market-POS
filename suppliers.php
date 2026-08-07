@@ -360,7 +360,7 @@ if($result){
                         <td>
                            
                             <div class="action-btns">
-                                <a href="" class="btn-update">Update</a>
+                                <a href="update-sup.php?id= <?php echo $row['id'];?>" class="btn-update">Update</a>
                                 <a href="delete-sup.php?id=<?php echo $row['id'];?>" class="btn-delete">Delete</a>
                             </div>
                         </td>

@@ -1,32 +1,24 @@
 <?php
 include "db.php";
-$id=$_GET['id'] ?? '';
-//select zyad bka!!!!!!!!!!!!!!!!!!!!!!!
+$id=$_GET['id'];
 if($_POST){
 $name=$_POST['name'];
-$category=$_POST['category_id'];
-$supplier=$_POST['supplier_id'];
-$purchase=$_POST['purchase_price'];
-$sale=$_POST['sale_price'];
-$stock=$_POST['stock'];
-$sql="UPDATE `products` SET `name`='$name',`category_id`='$category',`supplier_id`='$supplier',`purchase_price`='$purchase',`sale_price`='$sale',`stock`='$stock' WHERE id=$id";
+$phone=$_POST['phone'];
+$sql="UPDATE `suppliers` SET `name`='$name',`phone`='$phone' WHERE id=$id ";
 $result=mysqli_query($conn, $sql);
 if($result){
-    header("Location:products.php");
+    header("Location:suppliers.php");
     exit();
 }
 }
 
-
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Product Dashboard</title>
+    <title>Update Supplier Dashboard</title>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -165,8 +157,7 @@ if($result){
             font-size: 14px;
         }
 
-        .form-group input, 
-        .form-group select {
+        .form-group input {
             width: 100%;
             padding: 10px 15px;
             border: 1px solid #78909c;
@@ -177,8 +168,7 @@ if($result){
             color: #1a2f35;
         }
 
-        .form-group input:focus, 
-        .form-group select:focus {
+        .form-group input:focus {
             border-color: #2c4a52;
             background: #ffffff;
         }
@@ -211,8 +201,8 @@ if($result){
             <ul class="nav-links">
                 <li><a href="#"><i class="fa-solid fa-house"></i> Home</a></li>
                 <li><a href="#"><i class="fa-solid fa-list"></i> Categories</a></li>
-                <li class="active"><a href="#"><i class="fa-solid fa-box"></i> Products</a></li>
-                <li><a href="#"><i class="fa-solid fa-truck"></i> Suppliers</a></li>
+                <li><a href="#"><i class="fa-solid fa-box"></i> Products</a></li>
+                <li class="active"><a href="#"><i class="fa-solid fa-truck"></i> Suppliers</a></li>
             </ul>
         </div>
         <div class="logout-section">
@@ -222,77 +212,21 @@ if($result){
 
     <!-- Main Content (Right) -->
     <div class="main-content">
-        <h1 class="page-title">Update Product</h1>
+        <h1 class="page-title">Update Supplier</h1>
 
         <div class="form-container">
             <form action="#" method="POST">
                 <div class="form-group">
-                    <label>Product Name</label>
-                    <input type="text" name="name" placeholder="Enter product name" required>
+                    <label>Supplier Name</label>
+                    <input type="text" name="name" placeholder="Enter supplier name" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Category</label>
-                    <select name="category_id" required>
-                        <option value="">Select category</option>
-                        <?php
-                        $sql2="SELECT * FROM categories";
-                        $result2=mysqli_query($conn, $sql2);
-                        if($result2){
-                        while($row=mysqli_fetch_assoc($result2)):
-                        
-                        ?>
-                        <option value="<?php echo $row['id'] ?>">
-                            <?php
-                            echo $row['name'];
-                            ?>
-                        </option>
-                        <?php
-                        endwhile;
-                        }
-                        ?>
-                    </select>
+                    <label>Supplier Phone</label>
+                    <input type="text" name="phone" placeholder="Enter supplier phone" required>
                 </div>
 
-                <div class="form-group">
-                    <label>Supplier</label>
-                    <select name="supplier_id" required>
-                        <option value="">Select supplier</option>
-                        <?php
-                        $sql3="SELECT * FROM suppliers";
-                        $result3=mysqli_query($conn, $sql3);
-                        if($result3){
-                        while($row=mysqli_fetch_assoc($result3)):
-                        
-                        ?>
-                        <option value="<?php echo $row ['id'] ?>">
-                            <?php
-                            echo $row['name'];
-                            ?>
-                        </option>
-                        <?php
-                        endwhile;
-                        }
-                        ?>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Purchase Price</label>
-                    <input type="number" step="0.01" name="purchase_price" placeholder="0.00" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Sale Price</label>
-                    <input type="number" step="0.01" name="sale_price" placeholder="0.00" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Stock</label>
-                    <input type="number" name="stock" placeholder="Enter stock quantity" required>
-                </div>
-
-                <button type="submit" class="btn-submit">Update Product</button>
+                <button type="submit" class="btn-submit">Update Supplier</button>
             </form>
         </div>
     </div>
