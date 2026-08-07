@@ -222,6 +222,7 @@ $result=mysqli_query($conn, $sql);
                 <li><a href="categories.php"><i class="fa-solid fa-list"></i> Categories</a></li>
                 <li class="active"><a href="products.php"><i class="fa-solid fa-box"></i> Products</a></li>
                 <li><a href="suppliers.php"><i class="fa-solid fa-truck"></i> Suppliers</a></li>
+                <li class="active"><a href="sales.php"><i class="fa-solid fa-cart-shopping"></i> Sales</a></li>
             </ul>
         </div>
         <div class="logout-section">

@@ -244,7 +244,7 @@ if($row){
         }
 
         .btn-delete-row {
-            color: #b91c1c;
+            color: #155674;
             background: none;
             border: none;
             cursor: pointer;
@@ -339,9 +339,9 @@ if($row){
             <h2>Dashboard</h2>
             <ul class="nav-links">
                 <li><a href="#"><i class="fa-solid fa-house"></i> Home</a></li>
-                <li><a href="#"><i class="fa-solid fa-list"></i> Categories</a></li>
-                <li><a href="#"><i class="fa-solid fa-box"></i> Products</a></li>
-                <li><a href="#"><i class="fa-solid fa-truck"></i> Suppliers</a></li>
+                <li><a href="categoris.php"><i class="fa-solid fa-list"></i> Categories</a></li>
+                <li><a href="products.php"><i class="fa-solid fa-box"></i> Products</a></li>
+                <li><a href="suppliers.php"><i class="fa-solid fa-truck"></i> Suppliers</a></li>
                 <li class="active"><a href="#"><i class="fa-solid fa-cart-shopping"></i> Sales</a></li>
             </ul>
         </div>
@@ -401,7 +401,7 @@ if($row){
                             <?php
                             //bo away button (add) yaksar esh nakat (isset)dadanam la pesh yakam if
                              if(isset($_SESSION['cart'])){
-                             foreach($_SESSION['cart'] as $row_item){
+                             foreach($_SESSION['cart'] as $index=> $row_item){
                             ?>
                             <tr>
                                 <td><?php echo $row_item['name']; ?></td>
@@ -410,7 +410,7 @@ if($row){
                                 <td><?php echo $row_item['total_amount'];?></td>
                                 
                                
-                                <td><button class="btn-delete-row"><i class="fa-solid fa-trash"></i></button></td>
+                                <td><a  href="delete-sales.php?index=<?php echo $index;?>"class="btn-delete-row">delete</a></td>
                           
                             </tr>
                                   <?php
