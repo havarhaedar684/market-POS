@@ -400,8 +400,10 @@ if($row){
                         <tbody>
                             <?php
                             //bo away button (add) yaksar esh nakat (isset)dadanam la pesh yakam if
-                             if(isset($_SESSION['cart'])){
+                            $total_amount=0;
+                            if(isset($_SESSION['cart'])){
                              foreach($_SESSION['cart'] as $index=> $row_item){
+                            $total_amount +=$row_item['total_amount'];
                             ?>
                             <tr>
                                 <td><?php echo $row_item['name']; ?></td>
@@ -430,7 +432,7 @@ if($row){
                     
                     <div class="invoice-row">
                         <span>Total Amount:</span>
-                        <span class="amount">$1000.00</span>
+                        <span class="amount"><?php echo number_format($total_amount)."IQD"; ?></span>
                     </div>
 
                     <div class="divider"></div>
