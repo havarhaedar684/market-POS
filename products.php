@@ -267,7 +267,7 @@ $result=mysqli_query($conn, $sql);
                      <td><?php echo $row['sale_price']; ?></td>
                      <td><?php echo $row['stock']; ?></td>
                       <td class="action-btns">
-                            <a href="#">Edit</a>
+                            <a href="update-pro.php?id=<?php echo $row['id']; ?>">Edit</a>
                             <a href="delete-pro.php?id=<?php echo $row['id'];?>" class="delete">Delete</a>
                         </td>  
                     
