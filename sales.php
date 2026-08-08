@@ -1,9 +1,10 @@
 <?php
 session_start();
 include "db.php";
-if($_POST){
+if($_SERVER['REQUEST_METHOD']=='POST'){
+if(!empty($_POST['product_all']) && !empty($_POST['qty-q'])){
 $product=$_POST['product_all'];
-$qty=$_POST['qty-q'];
+$qty =$_POST['qty-q'];
 $sql="SELECT * FROM products where id=$product";
 $result=mysqli_query($conn, $sql);
 $row=mysqli_fetch_assoc($result);
@@ -19,6 +20,8 @@ if($row){
 }
 
 }
+}
+
 
 
 
@@ -329,6 +332,33 @@ if($row){
         .btn-save-invoice:hover {
             background: #1a2f35;
         }
+        .return-input {
+    width: 55px;
+    padding: 5px;
+    border: 1px solid #78909c;
+    border-radius: 6px;
+    background: #f0f4f8;
+    font-size: 13px;
+    outline: none;
+    color: #1a2f35;
+    text-align: center;
+}
+
+.btn-return-row {
+    background: #2c4a52;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background 0.2s ease;
+}
+
+.btn-return-row:hover {
+    background: #1e353b;
+}
     </style>
 </head>
 <body>
@@ -412,8 +442,18 @@ if($row){
                                 <td><?php echo $row_item['total_amount'];?></td>
                                 
                                
-                                <td><a  href="delete-sales.php?index=<?php echo $index;?>"class="btn-delete-row">delete</a></td>
+                                <td>
+                                    <a  href="delete-sales.php?index=<?php echo $index;?>"class="btn-delete-row">delete</a>
+                                
+                                <form action="return-sales.php" method="POST" style="display: inline-flex; gap: 5px; align-items: center;">
+                                 <input type="hidden" name="index" value="<?php echo $index; ?>">
+                                   <input type="number" name="return_qty" value="1" min="1" max="<?php echo $row_item['qty']; ?>" class="return-input">
+                                    <button type="submit" class="btn-return-row">Return</button>
+                                 </form>
+                                
+                                </td>
                           
+                        
                             </tr>
                                   <?php
                              }
@@ -435,18 +475,7 @@ if($row){
                         <span class="amount"><?php echo number_format($total_amount)."IQD"; ?></span>
                     </div>
 
-                    <div class="divider"></div>
-
-                    <div class="invoice-input-group">
-                        <label>Received Amount</label>
-                        <input type="number" placeholder="0.00">
-                    </div>
-
-                    <div class="invoice-row" style="margin-top: 5px;">
-                        <span>Change (گەڕاوە):</span>
-                        <span class="amount" style="color: #065f46;">$0.00</span>
-                    </div>
-                </div>
+                   
 
                 <button class="btn-save-invoice"><i class="fa-solid fa-check"></i> Save Invoice</button>
             </div>
