@@ -368,11 +368,13 @@ if($row){
         <div class="sidebar-top">
             <h2>Dashboard</h2>
             <ul class="nav-links">
-                <li><a href="#"><i class="fa-solid fa-house"></i> Home</a></li>
-                <li><a href="categoris.php"><i class="fa-solid fa-list"></i> Categories</a></li>
+                <li><a href="home.php"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="categories.php"><i class="fa-solid fa-list"></i> Categories</a></li>
                 <li><a href="products.php"><i class="fa-solid fa-box"></i> Products</a></li>
                 <li><a href="suppliers.php"><i class="fa-solid fa-truck"></i> Suppliers</a></li>
-                <li class="active"><a href="#"><i class="fa-solid fa-cart-shopping"></i> Sales</a></li>
+                <li class="active"><a href="sales.php"><i class="fa-solid fa-cart-shopping"></i> Sales</a></li>
+                 <li><a href="report.php"><i class="fa-solid fa-truck"></i> Report</a></li>
+
             </ul>
         </div>
         <div class="logout-section">
@@ -465,22 +467,26 @@ if($row){
                 </div>
             </div>
 
-            <!-- Right Side: Invoice Summary & Calculation -->
+           <!-- Right Side: Invoice Summary & Calculation -->
             <div class="invoice-section">
-                <div class="invoice-details">
-                    <div class="section-header">Invoice Summary</div>
-                    
-                    <div class="invoice-row">
-                        <span>Total Amount:</span>
-                        <span class="amount"><?php echo number_format($total_amount)."IQD"; ?></span>
+                <form action="report.php" method="POST">
+                    <div class="invoice-details">
+                        <div class="section-header">Invoice Summary</div>
+                        
+                        <div class="invoice-row">
+                            <span>Total Amount:</span>
+                            <span class="amount"><?php echo number_format($total_amount)."IQD"; ?></span>
+                            <input type="hidden" name="total_amount" value="<?php echo $total_amount; ?>">
+                        </div>
                     </div>
 
-                   
-
-                <button class="btn-save-invoice"><i class="fa-solid fa-check"></i> Save Invoice</button>
+                    <div style="margin-top: 20px;">
+                        <button type="submit" class="btn-save-invoice">
+                            <i class="fa-solid fa-check"></i> Save Invoice
+                        </button>
+                    </div>
+                </form>
             </div>
-        </div>
-    </div>
 
 </body>
 </html>
