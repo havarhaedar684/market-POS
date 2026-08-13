@@ -4,17 +4,23 @@ include "db.php";
 if($_SERVER["REQUEST_METHOD"]=='POST'){
 $email=$_POST['email'];
 $pass=$_POST['password'];
-$sql="SELECT * FROM users WHERE email='$email'";
+ $sql = "SELECT * FROM users  WHERE email = '$email' AND password = '$pass'";
 $result=mysqli_query($conn, $sql);
 if(mysqli_num_rows($result)>0){
     $row=mysqli_fetch_assoc($result);
-if(password_verify($pass, $row['password'])){
+    
+
+if($pass==$row['password']){
     $_SESSION['username']=$row['username'];
-    header("Location:dashboard.php");
+    $_SESSION['role']=$row['role'];
+    header("Location:home.php");
     exit();
 
 }
+}else{
+$error="incorrect email and password";
 }
+
 }
 
 
@@ -192,6 +198,11 @@ if(password_verify($pass, $row['password'])){
             </div>
             <h2>Market POS</h2>
             <p>Sign in to your terminal</p>
+            <?php
+            if($error ?? ''){
+           echo "<p>". $error."</p>";
+            }
+            ?>
         </div>
         <form method="POST">
             <div class="field">

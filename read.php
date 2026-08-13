@@ -20,221 +20,330 @@ $result=mysqli_query($conn,$sql);
     <title>Market POS - Users Table</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+       * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-        body {
-            background: #96B6C5;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+body {
+    background-color: #96B6C5;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    direction: ltr;
+}
 
-        .main-card {
-            background: #ADC4CE;
-            backdrop-filter: blur(10px);
-            padding: 40px 35px;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 900px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            animation: fadeIn 0.6s ease-out;
-        }
+/* Sidebar Styling (Left) */
+.sidebar {
+    width: 260px;
+    background: #ADC4CE;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 25px 20px;
+    order: -1;
+    flex-shrink: 0;
+}
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+.sidebar-top h2 {
+    font-size: 22px;
+    margin-bottom: 35px;
+    letter-spacing: 0.5px;
+    color: #2c4a52;
+    direction: ltr;
+    text-align: left;
+}
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+}
 
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+.nav-links li a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #334e58;
+    text-decoration: none;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    direction: ltr;
+}
 
-        .logo-icon {
-            width: 60px;
-            height: 60px;
-            background: #155674;
-            color: white;
-            font-size: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 14px;
-            box-shadow: 0 8px 16px rgba(79, 70, 229, 0.3);
-        }
+.nav-links li a i {
+    color: #334e58;
+    transition: color 0.3s ease;
+}
 
-        .card-header h2 {
-            color: #1e1b4b;
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 4px;
-            letter-spacing: -0.5px;
-        }
+.nav-links li a:hover {
+    background: transparent;
+    color: #1a2f35;
+}
 
-        .card-header p {
-            color: #64748b;
-            font-size: 14px;
-        }
+.nav-links li a:hover i {
+    color: #1a2f35;
+}
 
-        .logout-btn {
-            background: #155674;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
+.nav-links li.active a {
+    background: #2c4a52;
+    color: #ffffff;
+}
 
-        .logout-btn:hover {
-            background: #0891b2;;
-            transform: translateY(-1px);
-        }
+.nav-links li.active a i {
+    color: #ffffff;
+}
 
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 25px;
-            background: #ffffff;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
-        }
+.logout-section a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #155674;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    direction: ltr;
+}
 
-        .data-table th, .data-table td {
-            padding: 14px 16px;
-            text-align: left;
-            border-bottom: 1px solid #e2e8f0;
-            font-size: 14px;
-        }
+.logout-section a:hover {
+    background: transparent;
+    color: #0f3e53;
+}
 
-        .data-table th {
-            background-color: #f8fafc;
-            color: #475569;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+/* Main Content Styling (Right) */
+.main-content {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+    direction: ltr;
+}
 
-        .data-table td {
-            color: #1e293b;
-        }
+.main-card {
+    background: #ADC4CE;
+    backdrop-filter: blur(10px);
+    padding: 40px 35px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 1000px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    animation: fadeIn 0.6s ease-out;
+    margin: 0 auto;
+}
 
-        .data-table tr:last-child td {
-            border-bottom: none;
-        }
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-        .action-btns {
-            display: flex;
-            gap: 8px;
-        }
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
 
-        .btn-update {
-            background: #155674;
-            color:white;
-            padding: 6px 12px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
 
-        .btn-update:hover {
-            background: #0891b2;;
-        }
+.logo-icon {
+    width: 60px;
+    height: 60px;
+    background: #2c4a52;
+    color: white;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    box-shadow: 0 8px 16px rgba(44, 74, 82, 0.2);
+}
 
-        .btn-delete {
-            background: #155674;
-            color:white;
-            padding: 6px 12px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
+.card-header h2 {
+    color: #2c4a52;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+}
 
-        .btn-delete:hover {
-            background: #0891b2;;
-        }
+.card-header p {
+    color: #4d6871;
+    font-size: 14px;
+}
 
-        .table-footer-actions {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 20px;
-        }
+.logout-btn {
+    background: #2c4a52;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
 
-        .add-user-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: #155674;
-            color: #ffffff;
-            text-decoration: none;
-            padding: 12px 28px;
-            border-radius: 50px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            outline: none;
-            box-shadow: 0 4px 14px rgba(6, 182, 212, 0.35);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+.logout-btn:hover {
+    background: #1a2f35;
+    transform: translateY(-1px);
+}
 
-        .add-user-btn:hover {
-            background: #0891b2;
-            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
-            transform: translateY(-2px);
-        }
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+    background: #ADC4CE;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
 
-        .add-user-btn:active {
-            transform: translateY(1px);
-            box-shadow: 0 2px 8px rgba(6, 182, 212, 0.3);
-        }
+.data-table th, .data-table td {
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 14px;
+}
 
-        .data-table tr:hover {
-            background-color: #f1f5f9;
-        }
+.data-table th {
+    background-color: #8aa4b0;
+    color: #1a2f35;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.data-table td {
+    color: #2c4a52;
+    background-color: #ADC4CE;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+.action-btns {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-update {
+    background: #2c4a52;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn-update:hover {
+    background: #2c4a52;
+}
+
+.btn-delete {
+   background: #2c4a52;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn-delete:hover {
+    background: #2c4a52;
+}
+
+.table-footer-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.add-user-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #2c4a52;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    box-shadow: 0 4px 14px rgba(44, 74, 82, 0.3);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.add-user-btn:hover {
+    background: #1a2f35;
+    box-shadow: 0 6px 20px rgba(44, 74, 82, 0.4);
+    transform: translateY(-2px);
+}
+
+.add-user-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(44, 74, 82, 0.2);
+}
+
+.data-table tr:hover td {
+    background-color: rgba(255, 255, 255, 0.15);
+}
     </style>
 </head>
 <body>
+    <!-- Sidebar (Left) -->
+    <div class="sidebar">
+        <div class="sidebar-top">
+            <h2>Dashboard</h2>
+            <ul class="nav-links">
+                <li><a href="home.php"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="categories.php"><i class="fa-solid fa-list"></i> Categories</a></li>
+                <li><a href="products.php"><i class="fa-solid fa-box"></i> Products</a></li>
+                <li><a href="suppliers.php"><i class="fa-solid fa-truck"></i> Suppliers</a></li>
+                <li><a href="sales.php"><i class="fa-solid fa-cart-shopping"></i> Sales</a></li>
+                 <li class="active"><a href="read.php"><i class="fa-solid fa-user"></i> Users</a></li>
+                 <li><a href="report.php"><i class="fa-solid fa-chart-line"></i> Report</a></li>
+
+            </ul>
+        </div>
+        <div class="logout-section">
+            <a href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+    </div>
+
 
     <div class="main-card">
         <div class="card-header">
@@ -255,17 +364,15 @@ $result=mysqli_query($conn,$sql);
         <table class="data-table">
             <thead>
                 <tr>
-                    <th>ID
-                       
-                    </th>
-                    <th>Username
-                       
-                    </th>
-                    <th>Email</th>
+                    <th>ID</th>
+
+                    <th>Username</th>
                     
-                    <th>Password </th>
+                    <th>Email</th>
 
                     <th>Role</th>
+
+                    <th>action</th>
 
                 </tr>
                 </form>
@@ -288,17 +395,14 @@ $result=mysqli_query($conn,$sql);
                        echo  "<td>". $row['email']."</td>";
                  ?>
 
-                <?php
-                       echo  "<td>". $row['password']."</td>";
-                 ?>
 
                  <?php
                        echo  "<td>".$row['role']."</td>";
                  ?>
                  <td>
                  <div class='action-btns'>
-                               <a href="update.php?id=<?php echo $row['id'];?>" class='btn-update'><i class='fa-solid fa-pen-to-square'></i> Edit</a>
-                               <a href="delete.php?id= <?php echo $row['id']; ?>" class='btn-delete'><i class='fa-solid fa-trash'></i> Delete</a>
+                               <a href="update.php?id=<?php echo $row['id'];?>" class='btn-update'><i></i> Edit</a>
+                               <a href="delete.php?id= <?php echo $row['id']; ?>" class='btn-delete'><i ></i> Delete</a>
                            </div>
                            </td>
                    </tr>

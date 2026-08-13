@@ -324,14 +324,14 @@ body {
 
 .stat-info p {
     color: #4d6871;
-    font-size: 13px;
+    font-size: bold 13px;
     margin-bottom: 5px;
 }
 
 
 .stat-info h2 {
     color: #1e1b4b;
-    font-size: 21px;
+    font-size:21px;
 }
 
 
@@ -409,12 +409,12 @@ th {
 
 td {
     color: #2c4a52;
-    background: white;
+    background: #ADC4CE;
 }
 
 
 tr:not(:last-child) td {
-    border-bottom: 1px solid #f0f4f8;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
 }
 .quick-card {
     display: flex;
@@ -483,33 +483,6 @@ tr:not(:last-child) td {
     margin-bottom: 20px;
 }
 
-
-.stock-list {
-    display: flex;
-    flex-direction: column;
-}
-
-
-.stock-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 5px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-}
-
-
-.stock-item:last-child {
-    border-bottom: none;
-}
-
-.product-stock {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-
 .product-icon {
     width: 38px;
     height: 38px;
@@ -541,15 +514,6 @@ tr:not(:last-child) td {
 }
 
 
-.stock-number {
-    color: #155674;
-    font-size: 13px;
-    font-weight: 700;
-    background: #d9e7ec;
-    padding: 6px 10px;
-    border-radius: 6px;
-}
-
 @media (max-width: 1100px) {
 
     .stats-grid {
@@ -559,6 +523,7 @@ tr:not(:last-child) td {
 
     .dashboard-grid {
         grid-template-columns: 1fr;
+       
     }
 }
 
@@ -676,12 +641,20 @@ tr:not(:last-child) td {
                     </a>
                 </li>
 
+                 <li>
+                    <a href="report.php">
+                        <i class="fa-solid fa-user"></i>
+                        Users
+                    </a>
+                </li>
+
                 <li>
                     <a href="report.php">
                         <i class="fa-solid fa-chart-line"></i>
                         Report
                     </a>
                 </li>
+
 
             </ul>
 
@@ -699,22 +672,11 @@ tr:not(:last-child) td {
 
     </aside>
 
-
-
-    <!-- =========================
-         MAIN CONTENT
-    ========================= -->
-
     <main class="main-content">
 
         <h1 class="page-title">
             Dashboard
         </h1>
-
-
-        <!-- =========================
-             WELCOME
-        ========================= -->
 
         <div class="welcome-box">
 
@@ -821,7 +783,7 @@ tr:not(:last-child) td {
                     </p>
 
                     <h2>
-                    <?php echo $total_sales_today; ?>
+                    <?php echo number_format($total_sales_today); ?>
                         <small>IQD</small>
                     </h2>
 
@@ -831,18 +793,8 @@ tr:not(:last-child) td {
 
         </div>
 
-
-
-        <!-- =========================
-             LOWER SECTION
-        ========================= -->
-
         <div class="dashboard-grid">
 
-
-            <!-- =========================
-                 RECENT SALES
-            ========================= -->
 
             <section class="dashboard-card">
 
@@ -895,43 +847,38 @@ tr:not(:last-child) td {
                             ?>
                             <tr>
 
-                                <td>
-                                   <?php echo $item_row['name'] ;?>
-                                </td>
+              <td>
+                <?php echo $item_row['name'] ;?>
+             </td>
                                   
-                                <td>
-                                 <?php echo $item_row['qty'] ;?>
-                                </td>
+             <td>
+                <?php echo $item_row['qty'] ;?>
+            </td>
 
-                                <td>
-                                    <?php echo $item_row['price'];?>
-                                </td>
+             <td>
+                <?php echo $item_row['price'];?>
+            </td>
 
-                                <td>
-                                    <?php echo $item_row['total_amount'];?>
-                                </td>
+             <td>
+                <?php echo number_format($item_row['total_amount']);?>
+            </td>
 
 
 
-                            </tr>
-                      <?php
-                        }
-                        }
-                         ?>
+                </tr>
+              <?php
+                  }
+                 }
+                 ?>
 
-                        </tbody>
+                    </tbody>
 
-                    </table>
+                </table>
 
                 </div>
 
             </section>
 
-
-
-            <!-- =========================
-                 QUICK ACTIONS
-            ========================= -->
 
             <section class="dashboard-card quick-card">
 
@@ -940,7 +887,7 @@ tr:not(:last-child) td {
                 </h3>
 
 
-                <a href="sales.php" class="quick-button">
+         <a href="sales.php" class="quick-button">
 
                     <span>
                         <i class="fa-solid fa-cart-plus"></i>
@@ -1001,7 +948,44 @@ tr:not(:last-child) td {
                     <i class="fa-solid fa-chevron-right arrow"></i>
 
                 </a>
+                <div class="low-stock-section">
+    <div class="low-stock-header">
+        <i class="fa-solid fa-triangle-exclamation"></i> Low Stock Alerts
+    </div>
+    
+    <div class="low-stock-table-wrap">
+      <?php  $sql_check="SELECT name,stock FROM products WHERE stock < 5 AND stock > 0";
+           $result_check=mysqli_query($conn, $sql_check);?>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Remaining Stock</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+           if($result_check){
+            while($row1=mysqli_fetch_assoc($result_check)){
+                ?>
+                <tr>
+                    <td><?php echo $row1['name']  ?></td>
+                    <td><span class="low-stock-badge"><?php echo $row1['stock']  ?></span></td>
+                </tr>
+                <?php
+                   } 
+                  } else {
+                echo '<tr><td colspan="2" style="text-align: center; color: #78909c;">No low stock products</td></tr>';
+            }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+</section>
+
     </main>
+    
 
 </body>
 </html>

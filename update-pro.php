@@ -9,6 +9,7 @@ $supplier=$_POST['supplier_id'];
 $purchase=$_POST['purchase_price'];
 $sale=$_POST['sale_price'];
 $stock=$_POST['stock'];
+
 $sql="UPDATE `products` SET `name`='$name',`category_id`='$category',`supplier_id`='$supplier',`purchase_price`='$purchase',`sale_price`='$sale',`stock`='$stock' WHERE id=$id";
 $result=mysqli_query($conn, $sql);
 if($result){
@@ -209,10 +210,10 @@ if($result){
         <div class="sidebar-top">
             <h2>Dashboard</h2>
             <ul class="nav-links">
-                <li><a href="#"><i class="fa-solid fa-house"></i> Home</a></li>
-                <li><a href="#"><i class="fa-solid fa-list"></i> Categories</a></li>
-                <li class="active"><a href="#"><i class="fa-solid fa-box"></i> Products</a></li>
-                <li><a href="#"><i class="fa-solid fa-truck"></i> Suppliers</a></li>
+                <li><a href="home.php"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="categories.php"><i class="fa-solid fa-list"></i> Categories</a></li>
+                <li class="active"><a href="products.php"><i class="fa-solid fa-box"></i> Products</a></li>
+                <li><a href="suppliers.php"><i class="fa-solid fa-truck"></i> Suppliers</a></li>
             </ul>
         </div>
         <div class="logout-section">

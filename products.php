@@ -1,7 +1,20 @@
 <?php
+session_start();
 include "db.php";
-$sql="SELECT * FROM products";
+//$sql="SELECT p.id,p.name,c.name,p As catt,s.name AS sup,p.supplier_id,p.purchase_price,p.sale_price,p.stock FROM
+ //products p join categories c on p.category_id = c.id join suppliers s on p.supplier_id = s.id ";
+if(isset($_GET['search']) && !empty($_GET['search'])){
+    $search=$_GET['search'];
+ $sql = "SELECT p.id, p.name, c.name AS catt, s.name AS sup, p.supplier_id, p.purchase_price, p.sale_price, p.stock FROM
+  products p JOIN categories c ON p.category_id = c.id JOIN suppliers s ON p.supplier_id = s.id WHERE p.name LIKE '$search%'";
+
+  }else
+  {$sql = "SELECT p.id, p.name, c.name AS catt, s.name AS sup, p.supplier_id, p.purchase_price, p.sale_price, p.stock FROM
+  products p JOIN categories c ON p.category_id = c.id JOIN suppliers s ON p.supplier_id = s.id";
+  }
 $result=mysqli_query($conn, $sql);
+  
+
 
 
 
@@ -196,19 +209,90 @@ $result=mysqli_query($conn, $sql);
         }
 
         .action-btns a {
-            color: #155674;
-            margin-right: 10px;
+            background: #2c4a52;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
             text-decoration: none;
+            font-size: 13px;
             font-weight: 600;
-        }
+            transition: background 0.2s;
+             }
 
-        .action-btns a.delete {
-            color: #b91c1c;
-        }
+            .action-btns a.delete {
+             background: #2c4a52;
+             color: white;
+             padding: 6px 12px;
+             border-radius: 6px;
+             text-decoration: none;
+             font-size: 13px;
+             font-weight: 600;
+             transition: background 0.2s;
+             }
 
         .action-btns a:hover {
-            text-decoration: underline;
+           background: #1e353b;
         }
+        .low-stock-section {
+    background: #ADC4CE;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.low-stock-header {
+    font-size: 18px;
+    color: #2c4a52;
+    font-weight: 700;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.low-stock-header i {
+    color: #d9534f;
+}
+
+.low-stock-table-wrap {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.low-stock-table-wrap table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.low-stock-table-wrap th, 
+.low-stock-table-wrap td {
+    padding: 12px 15px;
+    font-size: 14px;
+}
+
+.low-stock-table-wrap th {
+    background: #8aa4b0;
+    color: #1a2f35;
+    font-weight: 700;
+}
+
+.low-stock-table-wrap tr:not(:last-child) td {
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.low-stock-table-wrap td {
+    color: #2c4a52;
+}
+
+.low-stock-badge {
+    color: #d9534f;
+    font-weight: 700;
+}
     </style>
 </head>
 <body>
@@ -223,6 +307,7 @@ $result=mysqli_query($conn, $sql);
                 <li class="active"><a href="products.php"><i class="fa-solid fa-box"></i> Products</a></li>
                 <li><a href="suppliers.php"><i class="fa-solid fa-truck"></i> Suppliers</a></li>
                 <li><a href="sales.php"><i class="fa-solid fa-cart-shopping"></i> Sales</a></li>
+                <li><a href="read.php"><i class="fa-solid fa-user"></i> Users</a></li>
                  <li><a href="report.php"><i class="fa-solid fa-chart-line"></i> Report</a></li>
             </ul>
         </div>
@@ -236,9 +321,16 @@ $result=mysqli_query($conn, $sql);
         <h1 class="page-title">Products Management</h1>
 
         <div class="top-controls">
-            <div class="search-box">
-                <input type="text" placeholder="Search products...">
-            </div>
+    <form method="GET" action="" style="display: flex; gap: 10px; align-items: center;">
+        <div class="search-box">
+            
+            <input type="text" name="search" placeholder="Search products..." value="<?php echo htmlspecialchars($_GET['search'] ?? ''); ?>">
+        </div>
+        <button type="submit" class="btn-add" style="padding: 10px 15px;">Search</button>
+        <?php if(isset($_GET['search']) && $_GET['search'] != ''): ?>
+            <a href="products.php" class="btn-add" style="background: #78909c; text-decoration: none; display: flex; align-items: center;">Reset</a>
+        <?php endif; ?>
+    </form>
             <a href="add-products.php" class="btn-add"><i class="fa-solid fa-plus"></i> Add Product</a>
         </div>
 
@@ -259,24 +351,30 @@ $result=mysqli_query($conn, $sql);
                 <tbody>
                     <?php
                     while($row=mysqli_fetch_assoc($result)):
+                        
                     ?>
                     <tr>
-                     <td><?php echo $row['id']; ?></td>
+                     <td><?php echo number_format( $row['id']);?></td>
                      <td><?php echo $row['name']; ?></td>
-                     <td><?php echo $row['category_id']; ?></td>
-                     <td><?php echo $row['supplier_id']; ?></td>
+                     <td><?php echo $row['catt']; ?></td>
+                     <td><?php echo $row['sup']; ?></td>
                      <td><?php echo $row['purchase_price']; ?></td>
                      <td><?php echo $row['sale_price']; ?></td>
                      <td><?php echo $row['stock']; ?></td>
-                      <td class="action-btns">
+                   
+                    
+                     <td class="action-btns">
                             <a href="update-pro.php?id=<?php echo $row['id']; ?>">Edit</a>
                             <a href="delete-pro.php?id=<?php echo $row['id'];?>" class="delete">Delete</a>
                         </td>  
+                    </tr>
                     
                      <?php    
                         endwhile;
                         ?>
+                        
                 </tbody>
+                
             </table>
         </div>
     </div>

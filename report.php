@@ -1,12 +1,22 @@
 <?php
 session_start();
 include "db.php";
-$total_amount=0;
-if($_SESSION['cart'] ?? ''){
-foreach($_SESSION['cart'] as $row_item){
-$total_amount += $row_item['total_amount'];
+if(!isset($_SESSION['username']) || $_SESSION['role'] === "employee"){
+    header("Location:index.php");
+    exit();
 }
+if(isset($_GET['id'])){
+$id=$_GET['id'];
+$sql_delete="DELETE FROM sales_item where id=$id";
+mysqli_query($conn, $sql_delete);
 }
+$total="SELECT sum(total_amount) AS total_revenue FROM sales_item";
+$total_query=mysqli_query($conn, $total);
+$total_row=mysqli_fetch_assoc($total_query);
+$total_amount=$total_row['total_revenue'];
+$sql="SELECT id, name, quantity, unit_price, total_amount,date_sale FROM sales_item";
+$result=mysqli_query($conn, $sql);
+
 
 
 
@@ -155,6 +165,23 @@ $total_amount += $row_item['total_amount'];
 
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
+        .logout-section a {
+         display: flex;
+         align-items: center;
+         gap: 10px;
+         color: #155674;
+         text-decoration: none;
+         font-size: 15px;
+         font-weight: 600;
+         padding: 10px;
+         border-radius: 8px;
+         transition: all 0.2s ease;
+          }
+
+         .logout-section a:hover {
+          background: transparent;
+          color: #0f3e53;
+          }
 
         .section-header {
             font-size: 18px;
@@ -222,17 +249,12 @@ $total_amount += $row_item['total_amount'];
         td {
             color: #2c4a52;
 
-            background: white;
+            background: #ADC4CE;
         }
 
         tr:not(:last-child) td {
-            border-bottom: 1px solid #f0f4f8;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
         }
-
-
-        /* =========================
-           EMPTY REPORT
-        ========================= */
 
         .empty-message {
             text-align: center;
@@ -245,9 +267,6 @@ $total_amount += $row_item['total_amount'];
         }
 
 
-        /* =========================
-           RESPONSIVE
-        ========================= */
 
         @media (max-width: 800px) {
 
@@ -264,6 +283,21 @@ $total_amount += $row_item['total_amount'];
                 padding: 10px;
             }
         }
+        .btn-delete {
+    background: #2c4a52;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background 0.2s;
+    display: inline-block;
+}
+
+.btn-delete:hover {
+    background: #1e353b;
+}
 
     </style>
 </head>
@@ -315,6 +349,13 @@ $total_amount += $row_item['total_amount'];
                     </a>
                 </li>
 
+                 <li>
+                    <a href="read.php">
+                        <i class="fa-solid fa-user"></i>
+                        Users
+                    </a>
+                </li>
+
                 <li class="active">
                     <a href="report.php">
                         <i class="fa-solid fa-chart-line"></i>
@@ -331,7 +372,7 @@ $total_amount += $row_item['total_amount'];
 
         <div class="logout-section">
 
-            <a href="#">
+            <a href="logout.php">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Logout
             </a>
@@ -340,10 +381,6 @@ $total_amount += $row_item['total_amount'];
 
     </div>
 
-
-    <!-- =========================
-         MAIN CONTENT
-    ========================= -->
 
     <div class="main-content">
 
@@ -398,6 +435,11 @@ $total_amount += $row_item['total_amount'];
                                 Date & Time
                             </th>
 
+                             <th>
+                                Action
+                            </th>
+
+
                         </tr>
 
                     </thead>
@@ -407,18 +449,21 @@ $total_amount += $row_item['total_amount'];
 
                     <?php
 
-                    if($_SESSION['cart'] ?? ''){
-
-                        foreach ($_SESSION['cart'] as $item){
+                    if($result){
+                     while($row=mysqli_fetch_assoc($result)){
+                       
 
                     ?>
 
                         <tr>
-                          <td><?php echo htmlspecialchars($item['name']); ?></td>
-                          <td><?php echo $item['qty']; ?></td>
-                          <td><?php echo number_format($item['price']); ?> IQD</td>
-                          <td><?php echo number_format($item['total_amount']); ?> IQD </td>
-                          <td><?php echo date("d/m/Y H:i"); //AI ?>  </td>
+                          <td><?php echo $row['name'] ?></td>
+                          <td><?php echo $row['quantity']; ?></td>
+                          <td><?php echo number_format($row['unit_price']); ?> IQD</td>
+                          <td><?php echo number_format($row['total_amount']); ?> IQD </td>
+                          <td><?php echo $row['date_sale']; //AI ?></td>
+
+                         <td><a href="report.php?id=<?php echo $row['id']; ?>" class="btn-delete" onclick="return confirm('Are you sure you want to delete this?');" >Delete</a></td> 
+                       
                            
                         </tr>
                     <?php
@@ -427,7 +472,7 @@ $total_amount += $row_item['total_amount'];
 
                     ?>
 
-
+                    
                     </tbody>
 
                 </table>

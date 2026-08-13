@@ -20,213 +20,244 @@ if($result){
     <title>Categories Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-        body {
-            background-color: #f8fafc;
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
+body {
+    background-color: #96B6C5;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    direction: ltr;
+}
 
-        /* Sidebar Styling */
-        .sidebar {
-            width: 260px;
-            background: #1e1b4b;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 25px 20px;
-        }
+/* Sidebar Styling */
+.sidebar {
+    width: 260px;
+    background: #ADC4CE;
+    color: #334e58;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 25px 20px;
+    order: -1;
+}
 
-        .sidebar-top h2 {
-            font-size: 22px;
-            margin-bottom: 35px;
-            letter-spacing: 0.5px;
-            color: #818cf8;
-        }
+.sidebar-top h2 {
+    font-size: 22px;
+    margin-bottom: 35px;
+    letter-spacing: 0.5px;
+    color: #2c4a52;
+    text-align: left;
+}
 
-        .nav-links {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+}
 
-        .nav-links li a {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            color: #94a3b8;
-            text-decoration: none;
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-size: 15px;
-            transition: all 0.3s ease;
-        }
+.nav-links li a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #334e58;
+    text-decoration: none;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
 
-        .nav-links li.active a, .nav-links li a:hover {
-            background: #312e81;
-            color: #ffffff;
-        }
+.nav-links li a i {
+    color: #334e58;
+    transition: color 0.3s ease;
+}
 
-        .logout-section a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #ef4444;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 600;
-            padding: 10px;
-            transition: color 0.2s;
-        }
+/* Hover - Color change only (No background change) */
+.nav-links li a:hover {
+    background: transparent;
+    color: #1a2f35;
+}
 
-        .logout-section a:hover {
-            color: #f87171;
-        }
+.nav-links li a:hover i {
+    color: #1a2f35;
+}
 
-        /* Main Content Styling */
-        .main-content {
-            flex: 1;
-            padding: 40px;
-            overflow-y: auto;
-        }
+.nav-links li.active a {
+    background: #2c4a52;
+    color: #ffffff;
+}
 
-        .page-title {
-            font-size: 24px;
-            color: #1e1b4b;
-            margin-bottom: 25px;
-            font-weight: 700;
-        }
+.nav-links li.active a i {
+    color: #ffffff;
+}
 
-        /* Input / Add Form Card */
-        .form-card {
-            background: #ffffff;
-            padding: 20px 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-            border: 1px solid #e2e8f0;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            margin-bottom: 25px;
-        }
+.logout-section a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #155674;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
 
-        .form-card input {
-            flex: 1;
-            padding: 12px 18px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            font-size: 14px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
+.logout-section a:hover {
+    background: transparent;
+    color: #0f3e53;
+}
 
-        .form-card input:focus {
-            border-color: #4f46e5;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-        }
+/* Main Content Styling */
+.main-content {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+}
 
-        .btn-add {
-            background: #4f46e5;
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
-        }
+.page-title {
+    font-size: 24px;
+    color: #1e1b4b;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
 
-        .btn-add:hover {
-            background: #4338ca;
-        }
+/* Input / Add Form Card */
+.form-card {
+    background: #ADC4CE;
+    padding: 20px 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 25px;
+}
 
-        .btn-add:active {
-            transform: scale(0.98);
-        }
-         
-        /* Table Card Container */
-        .table-card {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-            border: 1px solid #e2e8f0;
-            overflow: hidden;
-        }
+.form-card input {
+    flex: 1;
+    padding: 12px 18px;
+    border: 1px solid #78909c;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    background: #f0f4f8;
+    color: #334e58;
+}
 
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
+.form-card input:focus {
+    border-color: #155674;
+    box-shadow: 0 0 0 3px rgba(21, 86, 116, 0.15);
+}
 
-        .data-table th, .data-table td {
-            padding: 16px 20px;
-            border-bottom: 1px solid #f1f5f9;
-            font-size: 14px;
-        }
+.btn-add {
+    background: #2c4a52;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
 
-        .data-table th {
-            background-color: #f8fafc;
-            color: #475569;
-            font-weight: 600;
-        }
+.btn-add:hover {
+    background: #1a2f35;
+}
 
-        .data-table td {
-            color: #334155;
-        }
+.btn-add:active {
+    transform: scale(0.98);
+}
 
-        .data-table tr:last-child td {
-            border-bottom: none;
-        }
+/* Table Card Container */
+.table-card {
+    background: #ADC4CE;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+    overflow: hidden;
+}
 
-        .data-table tr:hover {
-            background-color: #f8fafc;
-        }
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
 
-        .action-btns {
-            display: flex;
-            gap: 10px;
-        }
+.data-table th,
+.data-table td {
+    padding: 16px 20px;
+    font-size: 14px;
+}
 
-        .btn-update {
-            background: #e0e7ff;
-            color: #4f46e5;
-            padding: 6px 12px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
+.data-table th {
+    background-color: #8aa4b0;
+    color: #1a2f35;
+    font-weight: 700;
+}
 
-        .btn-update:hover {
-            background: #c7d2fe;
-        }
+.data-table td {
+    color: #2c4a52;
+    background-color: #ADC4CE;
+}
 
-        .btn-delete {
-            background: #fee2e2;
-            color: #dc2626;
-            padding: 6px 12px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
+.data-table tr:not(:last-child) td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
 
-        .btn-delete:hover {
-            background: #fecaca;
-        }
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tr:hover td {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.action-btns {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-update {
+    background: #2c4a52;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn-update:hover {
+    background: #2c4a52;
+}
+
+.btn-delete {
+    background: #2c4a52;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn-delete:hover {
+    background: #2c4a52;
+}
     </style>
 </head>
 <body>
@@ -241,6 +272,7 @@ if($result){
                 <li><a href="products.php"><i class="fa-solid fa-box"></i> Products</a></li>
                 <li><a href="suppliers.php"><i class="fa-solid fa-truck"></i> Suppliers</a></li>
                 <li><a href="sales.php"><i class="fa-solid fa-cart-shopping"></i> Sales</a></li>
+                <li><a href="read.php"><i class="fa-solid fa-user"></i> Users</a></li>
                  <li><a href="report.php"><i class="fa-solid fa-chart-line"></i> Report</a></li>
 
             </ul>
@@ -282,7 +314,7 @@ if($result){
                     <tr>
                         <td><?php echo $row['id']; ?></td>
                         <td><?php echo $row['name']; ?></td>
-                        <td><?php echo $row['created_at']; ?></td>
+                        <td><?php echo date("d/m/Y H:i"); ?></td>
                         <td>
                             <div class="action-btns">
                              <a href="update-cat.php?id= <?php echo $row['id']; ?>"class="btn-update">Update</a>
