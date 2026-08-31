@@ -954,7 +954,7 @@ tr:not(:last-child) td {
     </div>
     
     <div class="low-stock-table-wrap">
-      <?php  $sql_check="SELECT name,stock FROM products WHERE stock < 5 AND stock > 0";
+      <?php  $sql_check="SELECT name,stock FROM products WHERE stock <= 5 AND stock > 0";
            $result_check=mysqli_query($conn, $sql_check);?>
         <table>
             <thead>
