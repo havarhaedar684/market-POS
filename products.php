@@ -13,7 +13,7 @@ if(isset($_GET['search']) && !empty($_GET['search'])){
   products p JOIN categories c ON p.category_id = c.id JOIN suppliers s ON p.supplier_id = s.id";
   }
 $result=mysqli_query($conn, $sql);
-  exit();
+ 
 
 
 
